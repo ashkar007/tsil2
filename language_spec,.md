@@ -98,13 +98,24 @@ Lists are ordered collections of values, enclosed in square brackets. The elemen
 [x1, x2, ..., xn]
 ```
 
+```
+
+**Indexing & Slicing:**
+
+Lists support standard integer indexing and slicing.
+- `list[index]`: Retrieve element at the given integer index.
+- `list[start:end]`: Retrieve a sub-list from `start` to `end` index (non-inclusive).
+- Omitted start/end (e.g. `list[:end]`, `list[start:]`, `list[:]`) are supported.
+
 **Examples:**
 
+```python
+lst = [10, 20, 30, 40]
+x = lst[0]        # 10
+y = lst[1:3]      # [20, 30]
+z = lst[:2]       # [10, 20]
 ```
-["SPX", "SX5E"]
-[0.3, 0.7]
-[1, 2, 3, 4, 5]
-```
+
 
 ## Timeseries
 
@@ -132,6 +143,27 @@ A **Timeseries** is a time-ordered/indexed list of values with some meta-data. T
   ]
 }
 ```
+
+**Indexing & Slicing:**
+
+Timeseries objects support slicing and indexing.
+- **Positional slicing/indexing** (with integer indices): Slices or retrieves elements by position (`iloc`).
+  - `ts[index]`: Retrieves the numeric value at position `index` (returns a float).
+  - `ts[start:end]`: Returns a new `Timeseries` containing elements from positional index `start` to `end`.
+  - Negative indices (e.g. `ts[-10:]`) are supported to get the tail of the series.
+- **Date label slicing** (with string/date/datetime indices): Slices elements by their datetime index.
+  - `ts["2025-01-01":"2025-01-10"]`: Returns a new `Timeseries` containing dates within the range (inclusive of both endpoints).
+
+**Examples:**
+
+```python
+spx_spot = SPOT(t("SPX"))
+first_val = spx_spot[0]                       # First spot price value (float)
+top20 = spx_spot[0:20]                         # First 20 elements (Timeseries)
+last10 = spx_spot[-10:]                        # Last 10 elements (Timeseries)
+jan_slice = spx_spot["2025-01-01":"2025-01-10"] # Date-range slice (Timeseries)
+```
+
 
 ## Ticker
 
